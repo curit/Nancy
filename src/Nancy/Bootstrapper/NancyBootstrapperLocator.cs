@@ -72,7 +72,7 @@
             {
                 var set = new HashSet<Type>();
                 
-                if (customBootstrappers.Where(bs => bs.BaseType != null).Any(boostrapper => !set.Add(boostrapper.BaseType)))
+                if (customBootstrappers.Any(boostrapper => !set.Add(boostrapper.BaseType)))
                 {
                     throw new Exception("Set allready contains type");
                 }
