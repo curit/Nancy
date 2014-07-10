@@ -55,7 +55,6 @@
             }
 
             Type bootstrapper;
-
             if (TryFindMostDerivedType(customBootstrappers, out bootstrapper))
             {
                 return bootstrapper;
@@ -68,24 +67,16 @@
 
         private static bool TryFindMostDerivedType(List<Type> customBootstrappers, out Type bootstrapper)
         {
-            try
-            {
-                var set = new HashSet<Type>();
+            var set = new HashSet<Type>();
+            bootstrapper = null;
                 
-                if (customBootstrappers.Any(boostrapper => !set.Add(boostrapper.BaseType)))
-                {
-                    throw new Exception("Set allready contains type");
-                }
-
-                var mostDerived = customBootstrappers.Except(set).Single();
-                bootstrapper = mostDerived;
-                return true;
-            }
-            catch (Exception)
+            if (customBootstrappers.All(boostrapper => set.Add(boostrapper.BaseType)))
             {
-                bootstrapper = null;
-                return false;
+                var except = customBootstrappers.Except(set).ToList();
+                bootstrapper = except.Count == 1 ? except[0] : null;
             }
+                
+            return bootstrapper != null;
         }
 
         private static string GetMultipleBootstrappersMessage(IEnumerable<Type> customBootstrappers)

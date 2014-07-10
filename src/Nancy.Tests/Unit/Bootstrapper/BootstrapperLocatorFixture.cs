@@ -90,7 +90,6 @@
 
         }
 
-
         [Fact]
         public void Should_automatically_resolve_the_most_derived_bootstrapper()
         {
