@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Reflection;
 
     using Nancy.Bootstrapper;
 
@@ -10,14 +9,6 @@
 
     public class BootstrapperLocatorFixture
     {
-        private delegate bool TryFindMostDerivedType(List<Type> customBootstrappers, out Type mostDerivedType);
-
-        private readonly TryFindMostDerivedType tryFindMostDerived =
-            (TryFindMostDerivedType)
-                Delegate.CreateDelegate(typeof (TryFindMostDerivedType),
-                    typeof (NancyBootstrapperLocator).GetMethod("TryFindMostDerivedType",
-                        BindingFlags.Static | BindingFlags.NonPublic));
-
         /// <summary>
         /// Internal stuff
         /// </summary>
@@ -98,7 +89,7 @@
             Type found;
 
             //When
-            var res = tryFindMostDerived(list, out found);
+            var res = NancyBootstrapperLocator.TryFindMostDerivedType(list, out found);
 
             //Then
             res.ShouldEqual(true);
@@ -113,7 +104,7 @@
             Type found;
 
             //When
-            var res = tryFindMostDerived(list, out found);
+            var res = NancyBootstrapperLocator.TryFindMostDerivedType(list, out found);
 
             //Then
             res.ShouldEqual(false);
@@ -128,7 +119,7 @@
             Type found;
 
             //When
-            var res = tryFindMostDerived(list, out found);
+            var res = NancyBootstrapperLocator.TryFindMostDerivedType(list, out found);
 
             //Then
             res.ShouldEqual(false);
@@ -143,7 +134,7 @@
             Type found;
 
             //When
-            var res = tryFindMostDerived(list, out found);
+            var res = NancyBootstrapperLocator.TryFindMostDerivedType(list, out found);
 
             //Then
             res.ShouldEqual(false);
@@ -158,7 +149,7 @@
             Type found;
 
             //When
-            var res = tryFindMostDerived(list, out found);
+            var res = NancyBootstrapperLocator.TryFindMostDerivedType(list, out found);
 
             //Then
             res.ShouldEqual(true);

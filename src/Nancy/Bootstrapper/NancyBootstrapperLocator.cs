@@ -65,7 +65,7 @@
             throw new BootstrapperException(errorMessage);
         }
 
-        private static bool TryFindMostDerivedType(List<Type> customBootstrappers, out Type bootstrapper)
+        internal static bool TryFindMostDerivedType(List<Type> customBootstrappers, out Type bootstrapper)
         {
             var set = new HashSet<Type>();
             bootstrapper = null;
